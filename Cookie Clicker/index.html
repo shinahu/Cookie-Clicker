@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Game</title>
+    <link rel="stylesheet" href="cookie.css">
+</head>
+<body>
+    <div class="background">
+        <div class="cookiecontainer">
+<script>
+
+    function update() {
+        document.getElementById('text').value = cookiecount;
+        document.title = cookiecount + "Cookies";
+
+        document.getElementById('amountMultiplier').innerHTML = "Multiplier Upgrade x" + (multiplier+1);
+        document.getElementById('amountMultiplier2').innerHTML = "x" + (multiplier+1);
+        document.getElementById('costMultiplier').innerHTML = ((multiplier+1) * 100) + " Cookies";
+        document.getElementById('currentMultiplier').innerHTML = "Your current Multiplier is x" + (multiplier);
+
+        document.getElementById('ammountMagicButton').innerHTML = "You Have " + magicButton + " Magic Button ";
+        document.getElementById('costMagicButton').innerHTML = ((magicButton+1) * 12) + " Cookies";
+       
+        document.getElementById('ammountMilkGlass').innerHTML = "You Have " + milkGlass + " Milk Glass ";
+        document.getElementById('costMilkGlass').innerHTML = ((milkGlass+1) * 15) + " Cookies";
+
+        document.getElementById('cookiespersecond').innerHTML = "You are gaining " + (((magicButton)+(milkGlass*2)) * multiplier ) + " Cookies per/s";
+
+    }
+    
+    var multiplier = 1;
+    var cookiecount = 0;
+    var magicButton = 0;
+    var milkGlass = 0;
+
+    function timer() {
+     cookiecount = cookiecount + magicButton*multiplier;
+     cookiecount = cookiecount + milkGlass*2*multiplier;
+     update()
+
+    }
+    setInterval(timer, 1000)
+</script>
+
+<p id="cookiespersecond">You are getting 0 cookies per/s</p>
+
+<a href=# onclick="add()"><img src="cookie.jpg"></a>
+<br><br>
+you got:
+<input type="text" id="text" disabled style="text-align: center"; value = 0></input>
+<script>
+    
+    function add() {
+        cookiecount = cookiecount + 1
+        update()
+
+    }
+
+</script>
+Cookies
+<br><br>
+
+<button><a href="#"onclick="save()">Save</a></button>
+<button><a href="#"onclick="load()">Load</a></button>
+
+<br><br>
+
+<p>Buy 1 Magic Button</p>
+<button><a href="#" onclick="buyMagicButton() "><img src="MagicButton.jpg" width="150px" height="150px"></a></button>
+ <p id="costMagicButton">12Cookies</p>  
+ <p id="ammountMagicButton">You have 0 Magic Buttons</p> 
+
+ <br></br>
+
+<p id="amountMultiplier">Multiplier Upgrade x2</p> 
+<button><a href="#"onclick="buyMultiplier()"><img src="powerup.png" width="150px" height="150px"></a></button>
+<p id="costMultiplier">200 Cookies</p>
+<p id="currentMultiplier">Your Current Multiplier is x1</p>
+
+<br></br>
+
+<p>Buy 1 glass of Milk</p>
+<button><a href="#" onclick="buyMilk()"><img src="Milk.jpg" width="150px" height="150px"></a></button>
+<p id="costMilkGlass">15 Cookies</p>
+<p id="ammountMilkGlass">You Have 0 Milk</p>
+
+
+<script>
+function save() {
+    localStorage.setItem("cookiecount", cookiecount);
+    localStorage.setItem("magicButton", magicButton);
+    localStorage.setItem("milkGlass", milkGlass);
+    localStorage.setItem("multiplier", multiplier);
+
+
+}
+
+function load() {
+    cookiecount = localStorage.getItem("cookiecount");
+    cookiecount = parseInt(cookiecount);
+    magicButton = localStorage.getItem("magicButton");
+    magicButton = parseInt(magicButton);
+    milkGlass = localStorage.getItem("milkGlass");
+    milkGlass = parseInt(milkGlass);
+    multiplier = localStorage.getItem("multiplier");
+    multiplier = parseInt(multiplier);
+    update()
+}
+
+function buyMagicButton() {
+if (cookiecount >= ((magicButton+1) * 12)){
+    cookiecount = cookiecount - ((magicButton+1) * 12);
+    magicButton = magicButton + 1;
+    update()
+
+}
+
+}
+function buyMilk() {
+if (cookiecount >= ((milkGlass+1) * 15)){
+    cookiecount = cookiecount - ((milkGlass+1) * 15);
+    milkGlass = milkGlass + 1;
+    update()
+
+}
+
+
+
+}
+
+function buyMultiplier() {
+    if (cookiecount>=((multiplier+1) * 100)){
+        cookiecount = cookiecount - ((multiplier+1) * 100);
+        multiplier = multiplier + 1;
+        update()
+    }
+}
+
+
+</script>
+        </div>
+</div>
+
+</body>
+</html>
